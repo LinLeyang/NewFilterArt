@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="138dp"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <include layout="@layout/item_filter_multiple" />
+
+
+    <TextView
+        android:id="@+id/tv_grid_filter_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/hy_common_orange"
+        android:gravity="center"
+        android:text="确认"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+</RelativeLayout>

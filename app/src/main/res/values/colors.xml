@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+
+    <color name="hy_common_text_black">#333333</color>
+    <color name="hy_common_text_gray">#666666</color>
+    <color name="hy_common_text_gray_light">#999999</color>
+    <color name="hy_common_text_orange">#FF552E</color>
+    <color name="hy_common_text_white">#FFFFFF</color>
+
+    <color name="hy_common_orange">#FF552E</color>
+    <color name="hy_common_orange_selected">#EE441D</color>
+
+    <color name="hy_common_line_gray">#F3F3F3</color>
+    <color name="hy_common_bg_gray">#F6F6F6</color>
+    <color name="hy_common_bg_white">#FFFFFF</color>
+
+    <color name="hy_toast_bg">#99000000</color>
+
+</resources>
