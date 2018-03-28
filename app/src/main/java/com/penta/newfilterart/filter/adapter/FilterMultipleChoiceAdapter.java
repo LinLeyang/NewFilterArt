@@ -20,6 +20,9 @@ import java.util.List;
 
 /**
  * Created by linyueyang on 9/4/17.
+ *
+ * 多选筛选框适配器
+ *
  */
 
 public class FilterMultipleChoiceAdapter extends FilterBaseAdapter<FilterMultipleChoiceAdapter.MultipleChoiceViewHolder> {

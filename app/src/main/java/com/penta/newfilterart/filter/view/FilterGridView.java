@@ -19,7 +19,7 @@ import com.penta.newfilterart.filter.bean.FilterBean;
 /**
  * Created by linyueyang on 2018/3/22.
  * <p>
- * 多选筛选项View
+ * 单级多选筛选项View
  */
 
 public class FilterGridView extends FilterBaseView {
@@ -29,7 +29,6 @@ public class FilterGridView extends FilterBaseView {
     RecyclerView rvGridFilter;
     TextView tvGridFilterTitle;
     TextView tvGridFilterConfirm;
-    FilterBaseAdapter filterListAdapter;
 
     public FilterGridView(Context context) {
         super(context);
@@ -64,9 +63,9 @@ public class FilterGridView extends FilterBaseView {
 
         tvGridFilterTitle.setText(filterBean.getText());
 
-        filterListAdapter = new FilterMultipleChoiceAdapter(context, filterBean.getSubList());
+        filterAdapter = new FilterMultipleChoiceAdapter(context, filterBean.getSubList());
         rvGridFilter.setLayoutManager(new GridLayoutManager(context, 4));
-        rvGridFilter.setAdapter(filterListAdapter);
+        rvGridFilter.setAdapter(filterAdapter);
         CommonDecoration commonDecoration = new CommonDecoration(context);
         commonDecoration.setHeight(10);
         commonDecoration.setWidth(10);
@@ -74,6 +73,7 @@ public class FilterGridView extends FilterBaseView {
         tvGridFilterConfirm.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                filterAdapter.saveSelectedToModel();
                 confirmClick();
             }
         });
@@ -81,11 +81,5 @@ public class FilterGridView extends FilterBaseView {
         addView(view);
 
     }
-
-    @Override
-    protected void restoreSelectedData() {
-        filterListAdapter.restoreData();
-    }
-
 
 }

@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.penta.newfilterart.filter.adapter.FilterBaseAdapter;
 import com.penta.newfilterart.filter.adapter.FilterSingleChoiceAdapter;
 import com.penta.newfilterart.filter.bean.FilterBean;
 
@@ -17,7 +18,7 @@ import java.util.List;
 /**
  * Created by linyueyang on 2018/3/22.
  * <p>
- * 普通筛选项
+ * 多级列表筛选View
  */
 
 public class FilterListView extends FilterBaseView {
@@ -49,6 +50,9 @@ public class FilterListView extends FilterBaseView {
         }
     }
 
+    /**
+     * 还原原有选中样式 ListFilter特殊处理复写restoreSelectedData
+     */
     @Override
     protected void restoreSelectedData() {
         if (recyclerViewList.size() <= 0) {
@@ -58,7 +62,7 @@ public class FilterListView extends FilterBaseView {
             removeView(recyclerViewList.get(1));
             recyclerViewList.remove(1);
         }
-        ((FilterSingleChoiceAdapter) recyclerViewList.get(0).getAdapter()).restoreData();
+        ((FilterBaseAdapter) recyclerViewList.get(0).getAdapter()).restoreData();
     }
 
     private void initRecyclerView(FilterBean filterBean) {
@@ -67,7 +71,7 @@ public class FilterListView extends FilterBaseView {
         recyclerView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1));
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        final FilterSingleChoiceAdapter filterListAdapter = new FilterSingleChoiceAdapter(getContext(), filterBean.getSubList());
+        final FilterBaseAdapter filterListAdapter = new FilterSingleChoiceAdapter(getContext(), filterBean.getSubList());
         filterListAdapter.setOnItemClickListener(new FilterSingleChoiceAdapter.onItemClickListener() {
             @Override
             public void onClick(FilterBean subFilterBean) {
@@ -79,8 +83,8 @@ public class FilterListView extends FilterBaseView {
                 if (subFilterBean.isParent() && subFilterBean.getSubList() != null && subFilterBean.getSubList().size() > 0) {
                     initRecyclerView(subFilterBean);
                 } else {
-                    for(RecyclerView rv:recyclerViewList){
-                        ((FilterSingleChoiceAdapter)rv.getAdapter()).saveSelectedToModel();
+                    for (RecyclerView rv : recyclerViewList) {
+                        ((FilterSingleChoiceAdapter) rv.getAdapter()).saveSelectedToModel();
                     }
                     confirmClick();
                 }

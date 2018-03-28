@@ -14,6 +14,9 @@ import java.util.List;
 
 /**
  * Created by linyueyang on 4/27/17.
+ *
+ * 单选筛选框适配器
+ *
  */
 
 public class FilterSingleChoiceAdapter extends FilterBaseAdapter<FilterSingleChoiceAdapter.FilterViewHolder> {

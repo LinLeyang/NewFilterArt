@@ -5,12 +5,13 @@ import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
+import com.penta.newfilterart.filter.adapter.FilterBaseAdapter;
 import com.penta.newfilterart.filter.bean.FilterBean;
 
 /**
  * Created by linyueyang on 2018/3/22.
  * <p>
- * 普通筛选项
+ * Filter View基类
  */
 
 public abstract class FilterBaseView extends LinearLayout {
@@ -18,6 +19,7 @@ public abstract class FilterBaseView extends LinearLayout {
     protected Context context;
     protected FilterBean filterBean;
     protected onConfirmClickListener onConfirmClickListener;
+    protected FilterBaseAdapter filterAdapter;
 
     public FilterBaseView(Context context) {
         super(context);
@@ -41,7 +43,9 @@ public abstract class FilterBaseView extends LinearLayout {
 
     protected abstract void bindDataToView(FilterBean filterBean);
 
-    protected abstract void restoreSelectedData();
+    protected void restoreSelectedData() {
+        filterAdapter.restoreData();
+    }
 
     protected void confirmClick() {
         if (onConfirmClickListener != null) {

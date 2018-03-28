@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import com.penta.newfilterart.DpPxUtil;
 import com.penta.newfilterart.R;
 import com.penta.newfilterart.filter.bean.FilterBean;
 import com.penta.newfilterart.filter.bean.FilterConstants;
@@ -30,22 +31,20 @@ public class FilterContainerView extends LinearLayout {
     /**
      * 筛选Tab栏相关
      */
-
     FilterTabView filterTabView;//筛选组件Tab栏
 
     /**
-     * 筛选主体相关
+     * 筛选主体View集合
      */
-    //FilterView filterListContainerView;//当前选中的筛选组件
     Map<Integer, FilterBaseView> filterViewMap = new HashMap<>();//普通筛选项集合
 
     /**
      * 侧滑筛选项
      */
     DrawerLayout drawerLayout;
-    //OnLastTabClick onLastTabClick;
+    FilterDrawerView filterDrawerView;
 
-    private static final int FILTER_INDEX = 1;//普通筛选项所在位置
+    private static final int FILTER_INDEX = 2;//普通筛选项所在位置
 
     public FilterContainerView(Context context) {
         super(context);
@@ -83,14 +82,19 @@ public class FilterContainerView extends LinearLayout {
                             filterView = new FilterGridView(context);
                             break;
                         case FilterConstants.FILTER_TYPE_DRAWER:
-                            //TODO:动态加入FilterDrawerView第一次展示有问题,暂时以xml布局替代,应有工号的解决方案
-                            filterView = drawerLayout.findViewById(R.id.fdv);
-                            drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+                            //TODO:动态加入FilterDrawerView第一次展示有问题,暂时以xml布局替代,应有更好的解决方案
+                            if (null != drawerLayout && null != filterDrawerView) {
+                                //drawerLayout的第一个子View必须是filterView
+                                filterView = filterDrawerView;
+
+                            }
                             break;
                     }
-                    filterView.bindDataToView(filterBean);
-                    filterViewMap.put(position, filterView);
-                }else {
+                    if (null != filterDrawerView) {
+                        filterView.bindDataToView(filterBean);
+                        filterViewMap.put(position, filterView);
+                    }
+                } else {
                     filterView.restoreSelectedData();
                 }
                 changeView(filterView);
@@ -118,8 +122,11 @@ public class FilterContainerView extends LinearLayout {
         filterTabView.setBackgroundColor(getResources().getColor(R.color.white));
         addView(filterTabView);
 
-        //TODO:初始化DrawerLayout
-
+        //初始化分割线
+        View view = new View(context);
+        view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DpPxUtil.dip2px(context, 0.5f)));
+        view.setBackgroundColor(getResources().getColor(R.color.hy_common_line_gray));
+        addView(view);
     }
 
     /**
@@ -170,8 +177,10 @@ public class FilterContainerView extends LinearLayout {
         view.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
     }
 
-    public void setDrawerLayout(DrawerLayout drawerLayout) {
+    public void setDrawerLayout(DrawerLayout drawerLayout, int lock_mode, FilterDrawerView filterDrawerView) {
         this.drawerLayout = drawerLayout;
+        this.filterDrawerView = filterDrawerView;
+        drawerLayout.setDrawerLockMode(lock_mode);
     }
 
 }

@@ -11,11 +11,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.penta.newfilterart.R;
+import com.penta.newfilterart.filter.adapter.FilterBaseAdapter;
 import com.penta.newfilterart.filter.adapter.FilterDrawerAdapter;
 import com.penta.newfilterart.filter.bean.FilterBean;
 
 /**
  * Created by linyueyang on 2018/3/27.
+ *
+ * 侧滑抽屉式筛选View
+ *
  */
 
 public class FilterDrawerView extends FilterBaseView {
@@ -24,8 +28,6 @@ public class FilterDrawerView extends FilterBaseView {
     RecyclerView rvDrawerFilter;
     TextView tvDrawerFilterClear;
     TextView tvDrawerFilterConfirm;
-    FilterDrawerAdapter filterDrawerAdapter;
-
 
     public FilterDrawerView(Context context) {
         super(context);
@@ -54,7 +56,7 @@ public class FilterDrawerView extends FilterBaseView {
         tvDrawerFilterConfirm.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                filterDrawerAdapter.saveSelectedToModel();
+                filterAdapter.saveSelectedToModel();
                 confirmClick();
             }
         });
@@ -63,13 +65,10 @@ public class FilterDrawerView extends FilterBaseView {
 
     @Override
     protected void bindDataToView(FilterBean filterBean) {
-        filterDrawerAdapter = new FilterDrawerAdapter(context, filterBean.getSubList());
-        rvDrawerFilter.setAdapter(filterDrawerAdapter);
+        filterAdapter = new FilterDrawerAdapter(context, filterBean.getSubList());
+        rvDrawerFilter.setAdapter(filterAdapter);
     }
 
-    @Override
-    protected void restoreSelectedData() {
-        filterDrawerAdapter.restoreData();
-    }
+
 
 }

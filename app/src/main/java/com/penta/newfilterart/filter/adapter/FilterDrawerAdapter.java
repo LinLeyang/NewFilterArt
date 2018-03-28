@@ -18,9 +18,12 @@ import java.util.Map;
 
 /**
  * Created by linyueyang on 2018/3/26.
+ *
+ * 抽屉式筛选框适配器
+ *
  */
 
-public class FilterDrawerAdapter extends RecyclerView.Adapter<FilterDrawerAdapter.ViewHolder> {
+public class FilterDrawerAdapter extends FilterBaseAdapter<FilterDrawerAdapter.ViewHolder> {
 
     Context context;
     List<FilterBean> filterBeanList;
@@ -67,12 +70,6 @@ public class FilterDrawerAdapter extends RecyclerView.Adapter<FilterDrawerAdapte
         return 0;
     }
 
-    public void restoreData() {
-        for (Map.Entry<Integer, FilterBaseAdapter> entry : multipleChoiceAdapterMap.entrySet()) {
-            entry.getValue().restoreData();
-        }
-    }
-
     class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvFilterItemTitle;
@@ -85,9 +82,26 @@ public class FilterDrawerAdapter extends RecyclerView.Adapter<FilterDrawerAdapte
         }
     }
 
+    @Override
     public void saveSelectedToModel() {
         for (Map.Entry<Integer, FilterBaseAdapter> entry : multipleChoiceAdapterMap.entrySet()) {
             entry.getValue().saveSelectedToModel();
+        }
+    }
+
+    /**
+     * 抽屉式Filter不需要处理选中状态初始化以及刷新 由子View自己处理
+     */
+    @Override
+    void refreshSelectedData() {}
+
+    /**
+     * 抽屉式Filter特殊处理
+     */
+    @Override
+    public void restoreData() {
+        for (Map.Entry<Integer, FilterBaseAdapter> entry : multipleChoiceAdapterMap.entrySet()) {
+            entry.getValue().restoreData();
         }
     }
 
