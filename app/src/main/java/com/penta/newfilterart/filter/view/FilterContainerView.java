@@ -97,7 +97,7 @@ public class FilterContainerView extends LinearLayout {
                 } else {
                     filterView.restoreSelectedData();
                 }
-                changeView(filterView);
+                changeView(position, filterView);
 
             }
         });
@@ -132,9 +132,10 @@ public class FilterContainerView extends LinearLayout {
     /**
      * 变换筛选框View
      *
+     * @param position
      * @param filterView
      */
-    private void changeView(FilterBaseView filterView) {
+    private void changeView(int position, FilterBaseView filterView) {
 
         if (filterView instanceof FilterDrawerView) {
             clearView();
@@ -149,20 +150,23 @@ public class FilterContainerView extends LinearLayout {
                 clearView();
             }
             if (filterView != view) {
-                showView(filterView);
+                showView(position, filterView);
             }
         }
     }
 
-    private void showView(FilterBaseView filterView) {
+    private void showView(int position, FilterBaseView filterView) {
+        filterTabView.selectTab(position);
         addView(filterView);
         heightMatchParent(FilterContainerView.this);
+
     }
 
     /**
      * 清空筛选栏
      */
     private void clearView() {
+        filterTabView.restoreTab();
         while (getChildCount() > FILTER_INDEX) {
             removeViewAt(FILTER_INDEX);
         }
@@ -183,7 +187,7 @@ public class FilterContainerView extends LinearLayout {
     private void heightMatchParent(View view) {
         if (null == view.getLayoutParams()) {
             view.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        }else {
+        } else {
             view.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
             view.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
             view.requestLayout();
