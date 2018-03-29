@@ -105,4 +105,14 @@ public class FilterDrawerAdapter extends FilterBaseAdapter<FilterDrawerAdapter.V
         }
     }
 
+    /**
+     * 清空当前选项
+     */
+    @Override
+    public void clearData(){
+        for (Map.Entry<Integer, FilterBaseAdapter> entry : multipleChoiceAdapterMap.entrySet()) {
+            entry.getValue().clearData();
+        }
+    }
+
 }

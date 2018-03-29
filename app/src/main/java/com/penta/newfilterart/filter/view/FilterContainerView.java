@@ -90,7 +90,7 @@ public class FilterContainerView extends LinearLayout {
                             }
                             break;
                     }
-                    if (null != filterDrawerView) {
+                    if (null != filterView) {
                         filterView.bindDataToView(filterBean);
                         filterViewMap.put(position, filterView);
                     }
@@ -170,11 +170,24 @@ public class FilterContainerView extends LinearLayout {
     }
 
     private void heightWrapContent(View view) {
-        view.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+        if (null == view.getLayoutParams()) {
+            view.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        } else {
+            view.getLayoutParams().height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            view.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+            view.requestLayout();
+        }
     }
 
     private void heightMatchParent(View view) {
-        view.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        if (null == view.getLayoutParams()) {
+            view.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        }else {
+            view.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
+            view.getLayoutParams().width = ViewGroup.LayoutParams.MATCH_PARENT;
+            view.requestLayout();
+        }
     }
 
     public void setDrawerLayout(DrawerLayout drawerLayout, int lock_mode, FilterDrawerView filterDrawerView) {

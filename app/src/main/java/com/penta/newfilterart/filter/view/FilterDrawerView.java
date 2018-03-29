@@ -17,9 +17,8 @@ import com.penta.newfilterart.filter.bean.FilterBean;
 
 /**
  * Created by linyueyang on 2018/3/27.
- *
+ * <p>
  * 侧滑抽屉式筛选View
- *
  */
 
 public class FilterDrawerView extends FilterBaseView {
@@ -60,6 +59,13 @@ public class FilterDrawerView extends FilterBaseView {
                 confirmClick();
             }
         });
+
+        tvDrawerFilterClear.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                filterAdapter.clearData();
+            }
+        });
     }
 
 
@@ -68,7 +74,6 @@ public class FilterDrawerView extends FilterBaseView {
         filterAdapter = new FilterDrawerAdapter(context, filterBean.getSubList());
         rvDrawerFilter.setAdapter(filterAdapter);
     }
-
 
 
 }

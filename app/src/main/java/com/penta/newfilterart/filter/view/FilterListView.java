@@ -84,7 +84,7 @@ public class FilterListView extends FilterBaseView {
                     initRecyclerView(subFilterBean);
                 } else {
                     for (RecyclerView rv : recyclerViewList) {
-                        ((FilterSingleChoiceAdapter) rv.getAdapter()).saveSelectedToModel();
+                        ((FilterBaseAdapter) rv.getAdapter()).saveSelectedToModel();
                     }
                     confirmClick();
                 }

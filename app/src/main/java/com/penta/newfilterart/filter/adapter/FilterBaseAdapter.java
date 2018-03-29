@@ -40,4 +40,12 @@ public abstract class FilterBaseAdapter<VH extends RecyclerView.ViewHolder> exte
     public interface onItemClickListener {
         void onClick(FilterBean filterBean);
     }
+
+
+    public void clearData(){
+
+    }
 }
+
+
+

@@ -20,9 +20,8 @@ import java.util.List;
 
 /**
  * Created by linyueyang on 9/4/17.
- *
+ * <p>
  * 多选筛选框适配器
- *
  */
 
 public class FilterMultipleChoiceAdapter extends FilterBaseAdapter<FilterMultipleChoiceAdapter.MultipleChoiceViewHolder> {
@@ -30,7 +29,7 @@ public class FilterMultipleChoiceAdapter extends FilterBaseAdapter<FilterMultipl
     private Context context;
     private List<FilterBean> filterBeanList;
 
-    List<FilterBean> selectedFilterBean = new ArrayList<>();
+    List<FilterBean> selectedFilterBeanList = new ArrayList<>();
 
     public FilterMultipleChoiceAdapter(Context context, @Nullable List<FilterBean> filterBeanList) {
         this.context = context;
@@ -60,7 +59,7 @@ public class FilterMultipleChoiceAdapter extends FilterBaseAdapter<FilterMultipl
         final FilterBean filterBean = filterBeanList.get(position);
 
         holder.textView.setText(filterBean.getText());
-        if (selectedFilterBean.contains(filterBean)) {
+        if (selectedFilterBeanList.contains(filterBean)) {
             holder.textView.setTextColor(context.getResources().getColor(R.color.hy_common_orange));
             holder.textView.setBackgroundDrawable(context.getResources().getDrawable(R.drawable.choice_selected_shape));
         } else {
@@ -77,28 +76,28 @@ public class FilterMultipleChoiceAdapter extends FilterBaseAdapter<FilterMultipl
 
     private void clickItem(int position, FilterBean filterBean) {
         if (position == 0) {
-            selectedFilterBean.clear();
-            selectedFilterBean.add(filterBean);
+            selectedFilterBeanList.clear();
+            selectedFilterBeanList.add(filterBean);
         } else {
-            if (selectedFilterBean.contains(filterBeanList.get(0))) {
-                selectedFilterBean.remove(filterBeanList.get(0));
+            if (selectedFilterBeanList.contains(filterBeanList.get(0))) {
+                selectedFilterBeanList.remove(filterBeanList.get(0));
             }
 
-            if (selectedFilterBean.contains(filterBean)) {
-                selectedFilterBean.remove(filterBean);
+            if (selectedFilterBeanList.contains(filterBean)) {
+                selectedFilterBeanList.remove(filterBean);
             } else {
-                selectedFilterBean.add(filterBean);
+                selectedFilterBeanList.add(filterBean);
             }
         }
         notifyDataSetChanged();
     }
 
     @Override
-    public void saveSelectedToModel(){
+    public void saveSelectedToModel() {
         for (FilterBean filterBean : filterBeanList) {
-            if (selectedFilterBean.contains(filterBean)) {
+            if (selectedFilterBeanList.contains(filterBean)) {
                 filterBean.setSelected(true);
-            }else {
+            } else {
                 filterBean.setSelected(false);
             }
         }
@@ -123,13 +122,24 @@ public class FilterMultipleChoiceAdapter extends FilterBaseAdapter<FilterMultipl
     }
 
     @Override
-    public void refreshSelectedData(){
-        selectedFilterBean.clear();
+    public void refreshSelectedData() {
+        selectedFilterBeanList.clear();
         for (FilterBean filterBean : filterBeanList) {
             if (filterBean.isSelected()) {
-                selectedFilterBean.add(filterBean);
+                selectedFilterBeanList.add(filterBean);
             }
         }
+
+        if (selectedFilterBeanList.size() == 0) {
+            selectedFilterBeanList.add(filterBeanList.get(0));
+        }
+
     }
 
+    @Override
+    public void clearData() {
+        selectedFilterBeanList.clear();
+        selectedFilterBeanList.add(filterBeanList.get(0));
+        notifyDataSetChanged();
+    }
 }
